@@ -1,0 +1,134 @@
+<div class="login-wrapper">
+  <div class="login-card">
+    
+    <div class="avatar-container">
+      <div class="avatar-bg">
+        <fa-icon [icon]="iconoUsuario" class="avatar-icon"></fa-icon>
+      </div>
+    </div>
+
+    <form class="login-form" (submit)="onLogin()">
+      
+      <div class="input-group">
+        <fa-icon [icon]="iconoCorreo" class="input-icon"></fa-icon>
+        <input 
+          type="email" 
+          name="correoLogin"
+          placeholder="Correo Electrónico" 
+          [(ngModel)]="loginData.correo" 
+          required>
+      </div>
+
+      <div class="input-group password-group">
+        <fa-icon [icon]="iconoCandado" class="input-icon"></fa-icon>
+        <input 
+          [type]="ocultarPassword ? 'password' : 'text'" 
+          name="passwordLogin"
+          placeholder="Contraseña" 
+          [(ngModel)]="loginData.contrasena" 
+          required>
+        <button type="button" class="toggle-password" (click)="ocultarPassword = !ocultarPassword">
+          <fa-icon [icon]="ocultarPassword ? iconoOjoCerrado : iconoOjoAbierto"></fa-icon>
+        </button>
+      </div>
+
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox">
+          <span>Recordarme</span>
+        </label>
+        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button type="submit" class="btn-login">INICIAR SESIÓN</button>
+      
+      <div class="register-redirect">
+        <p>¿No tienes cuenta? <a (click)="mostrarModal = true" class="register-link">Regístrate aquí</a></p>
+      </div>
+      
+    </form>
+  </div>
+</div>
+
+@if (mostrarModal) {
+  <div class="modal-overlay"> <div class="modal-card botica-glass">
+      
+      <div class="geo-line line-1"></div>
+      <div class="geo-line line-2"></div>
+
+      <button class="modal-close-btn" (click)="mostrarModal = false">
+        <fa-icon [icon]="iconoCerrar"></fa-icon>
+      </button>
+
+      <div class="modal-header-icon">
+        <div class="botica-logo-mini">
+          <span>BOTICA</span>
+        </div>
+      </div>
+
+      <h2 class="modal-title">Crear Cuenta</h2>
+      <p class="modal-subtitle">Completa tus datos para registrarte</p>
+
+      <form class="modal-form" (submit)="onRegistrar($event)">
+        
+        <div class="input-group-modern">
+          <label class="input-label">Nombres</label>
+          <div class="input-wrapper-inner border-rose">
+            <fa-icon [icon]="iconoNatural" class="input-icon-botica"></fa-icon>
+            <input 
+              type="text" 
+              name="nombres"
+              placeholder="Ingrese nombres" 
+              [(ngModel)]="registroData.nombres" 
+              required>
+          </div>
+        </div>
+
+        <div class="input-group-modern">
+          <label class="input-label">Apellidos</label>
+          <div class="input-wrapper-inner border-rose">
+            <fa-icon [icon]="iconoIdentidad" class="input-icon-botica"></fa-icon>
+            <input 
+              type="text" 
+              name="apellidos"
+              placeholder="Ingrese apellidos" 
+              [(ngModel)]="registroData.apellidos" 
+              required>
+          </div>
+        </div>
+
+        <div class="input-group-modern">
+          <label class="input-label">Correo Electrónico</label>
+          <div class="input-wrapper-inner border-green">
+            <fa-icon [icon]="iconoCorreo" class="input-icon-botica"></fa-icon>
+            <input 
+              type="email" 
+              name="correo"
+              placeholder="Ingrese correo electrónico" 
+              [(ngModel)]="registroData.correo" 
+              required>
+          </div>
+        </div>
+
+        <div class="input-group-modern">
+          <label class="input-label">Contraseña</label>
+          <div class="input-wrapper-inner border-green password-spatial">
+            <fa-icon [icon]="iconoCandado" class="input-icon-botica"></fa-icon>
+            <input 
+              [type]="ocultarPasswordRegistro ? 'password' : 'text'" 
+              name="contrasena"
+              placeholder="••••••••••" 
+              [(ngModel)]="registroData.contrasena" 
+              required>
+            <button type="button" class="toggle-password-botica" (click)="ocultarPasswordRegistro = !ocultarPasswordRegistro">
+              <fa-icon [icon]="ocultarPasswordRegistro ? iconoOjoCerrado : iconoOjoAbierto"></fa-icon>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-registrarme-botica">REGISTRARME</button>
+      </form>
+
+    </div>
+  </div>
+}
