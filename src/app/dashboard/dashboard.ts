@@ -1,13 +1,13 @@
 import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBox, faHome, faPrescriptionBottleMedical, faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faHome, faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
 import { BaseChartDirective } from 'ng2-charts';
-import ChartDataLabels from 'chartjs-plugin-datalabels'; 
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { 
-  ChartConfiguration, ChartOptions, Chart, ArcElement, BarElement, 
-  BarController, DoughnutController, CategoryScale, LinearScale, Legend, Tooltip 
+  ChartConfiguration, ChartOptions, Plugin, ArcElement, BarElement, 
+  BarController, DoughnutController, CategoryScale, LinearScale, Legend, Tooltip, Chart
 } from 'chart.js';
 
 Chart.register(ArcElement, BarElement, BarController, DoughnutController, CategoryScale, LinearScale, Legend, Tooltip, ChartDataLabels);
@@ -21,9 +21,72 @@ Chart.register(ArcElement, BarElement, BarController, DoughnutController, Catego
 })
 export class Dashboard implements AfterViewInit {
   iconLogout = faSignOutAlt; iconHome = faHome; iconProfile = faUserCircle;
-  iconBox = faBox; iconoBotica = faPrescriptionBottleMedical;
-
+  iconBox = faBox;
   public isChartReady = false;
+  public barChartData: any;
+
+  ngOnInit() {
+  const weekData = this.getWeekData();
+  this.barChartData = {
+    labels: weekData.dates,
+    datasets: [{
+      data: weekData.data,
+      backgroundColor: ['#3b82f6', '#0ea5e9', '#10b981', '#f59e0b', '#3b82f6', '#8b5cf6', '#f43f5e'],
+      borderRadius: 4
+    }]
+  };
+}
+
+  // PLUGIN DEFINITIVO: Dibuja líneas desde el centro del sector hasta el label
+  public connectorPlugin: Plugin = {
+    id: 'connectorLines',
+    afterDraw: (chart: any) => {
+      const { ctx } = chart;
+      const meta = chart.getDatasetMeta(0);
+      
+      meta.data.forEach((element: any) => {
+        const label = element.$datalabels ? element.$datalabels[0] : null;
+        if (label) {
+          const { x, y } = element.getCenterPoint();
+          const angle = (element.startAngle + element.endAngle) / 2;
+          const radius = element.outerRadius;
+          
+          ctx.save();
+          ctx.strokeStyle = '#ffffff'; // Línea blanca
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
+          ctx.lineTo(label.x, label.y);
+          ctx.stroke();
+          ctx.restore();
+        }
+      });
+    }
+  };
+
+  public chartPlugins = [ChartDataLabels, this.connectorPlugin];
+
+  public donutChartOptions: ChartOptions<'doughnut'> = {
+    responsive: true,
+    maintainAspectRatio: false,
+    layout: { padding: 40 },
+    plugins: { 
+      legend: { display: false },
+      tooltip: { enabled: false },
+      datalabels: {
+        color: '#fff',
+        anchor: 'end',
+        align: 'end',
+        offset: 5,
+        formatter: (value, ctx) => `${ctx.chart.data.labels![ctx.dataIndex]} (${value}%)`,
+        borderColor: '#fff',
+        borderWidth: 1,
+        borderRadius: 4,
+        padding: 4,
+        font: { size: 10, weight: 'bold' }
+      }
+    }
+  };
 
   public donutChartData: ChartConfiguration<'doughnut'>['data'] = {
     labels: ['Genéricos', 'Higiene', 'Bebé', 'Suplementos'],
@@ -34,58 +97,90 @@ export class Dashboard implements AfterViewInit {
     }]
   };
 
-  public donutChartOptions: ChartOptions<'doughnut'> = {
+  // ... dentro de tu clase Dashboard
+
+/* public barChartData: ChartConfiguration<'bar'>['data'] = {
+  labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+  datasets: [{ 
+    data: [65, 59, 80, 81, 56, 55, 40], 
+    // Cambiamos el color único por un array de colores para que cada barra sea distinta
+    backgroundColor: [
+      '#3b82f6', // Lun
+      '#0ea5e9', // Mar
+      '#10b981', // Mié
+      '#f59e0b', // Jue
+      '#3b82f6', // Vie
+      '#8b5cf6', // Sáb
+      '#f43f5e'  // Dom
+    ], 
+    borderRadius: 4 
+  }]
+}; */
+
+public barChartOptions: ChartOptions<'bar'> = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
-    legend: { display: false }, // Ocultamos la leyenda lateral
-    tooltip: { enabled: false }, // Desactivamos los tooltips al pasar el mouse
-    datalabels: {
-      color: '#fff',
-      anchor: 'end',      
-      align: 'start',     
-      offset: 20,         
-      formatter: (value, ctx) => {
-        const label = ctx.chart.data.labels![ctx.dataIndex];
-        return `${label} (${value}%)`; 
-      },
-      // Esto crea el recuadro que simula la etiqueta conectada
-      borderColor: '#fff',
-      borderWidth: 1,
-      borderRadius: 4,
-      padding: 6,
-      font: { size: 11, weight: 'bold' }
-    }
+    legend: { display: false },
+    tooltip: {
+      enabled: true,
+      // Esto fuerza al tooltip a mostrar los callbacks correctamente
+      callbacks: {
+        title: (context: any) => {
+          return `Fecha: ${context[0].label}`;
+        },
+        label: (context: any) => {
+          let label = 'Monto Soles: ';
+          if (context.parsed.y !== null) {
+            label += `S/ ${context.parsed.y}`;
+          }
+          return label;
+        }
+      }
+    },
+    datalabels: { display: false }
   },
-  layout: {
-    padding: {
-      top: 30,
-      bottom: 30,
-      left: 50,
-      right: 50
-    }
+  scales: {
+    x: { grid: { display: false }, ticks: { color: '#94a3b8' } },
+    y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } }
   }
 };
-
-  public barChartData: ChartConfiguration<'bar'>['data'] = {
-    labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
-    datasets: [{ data: [65, 59, 80, 81, 56, 55, 40], backgroundColor: '#3b82f6', borderRadius: 4 }]
-  };
-
-  public barChartOptions: ChartOptions<'bar'> = {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { x: { grid: { display: false }, ticks: { color: '#94a3b8' } }, y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } } }
-  };
-
   constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef) {}
-
-  ngAfterViewInit() {
+  
+  ngAfterViewInit() { 
+    // Usamos un timeout mayor para asegurar que los elementos del DOM estén listos
     setTimeout(() => { 
       this.isChartReady = true; 
-      this.cdr.detectChanges();
-    }, 150);
+      this.cdr.detectChanges(); 
+    }, 500); 
+  }
+  
+  onLogout() { this.authService.logout(); this.router.navigate(['/login']); }
+
+  // Agrega esto en tu clase Dashboard
+public getWeekData() {
+  const dates: string[] = [];
+  const data: number[] = [];
+  const today = new Date();
+
+  const dayOfWeek = today.getDay() || 7;
+  today.setHours(0, 0, 0, 0);
+  today.setDate(today.getDate() - (dayOfWeek - 1));
+
+  for (let i = 0; i < 7; i++) {
+    const current = new Date(today);
+    current.setDate(today.getDate() + i);
+    
+    // Cambiamos el formato para incluir el año (ej: '18 jun 2026')
+    dates.push(current.toLocaleDateString('es-ES', { 
+      day: 'numeric', 
+      month: 'short', 
+      year: 'numeric' 
+    }));
+    
+    data.push(Math.floor(Math.random() * 100) + 10); 
   }
 
-  onLogout() { this.authService.logout(); this.router.navigate(['/login']); }
+  return { dates, data };
+}
 }

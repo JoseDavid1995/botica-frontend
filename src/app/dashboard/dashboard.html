@@ -34,8 +34,21 @@
             <h3>Distribución de Ventas</h3>
             <div class="chart-wrapper">
                 @if (isChartReady) {
-                <canvas id="myDonutChart" baseChart [data]="donutChartData" [options]="donutChartOptions" [type]="'doughnut'"></canvas>
+                <canvas 
+                id="myDonutChart" 
+                baseChart 
+                [data]="donutChartData" 
+                [options]="donutChartOptions" 
+                [plugins]="chartPlugins"
+                [type]="'doughnut'">
+                </canvas>
                 }
+            </div>
+            <div class="custom-legend">
+                <div class="legend-item"><span style="background: #3b82f6"></span> Genéricos</div>
+                <div class="legend-item"><span style="background: #10b981"></span> Higiene</div>
+                <div class="legend-item"><span style="background: #f59e0b"></span> Bebé</div>
+                <div class="legend-item"><span style="background: #8b5cf6"></span> Suplementos</div>
             </div>
         </div>
       </div>
@@ -45,7 +58,13 @@
             <h3>Tendencias de Ventas Semanales</h3>
             <div class="chart-wrapper">
                 @if (isChartReady) {
-                <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
+                <canvas 
+                baseChart 
+                [data]="barChartData" 
+                [options]="barChartOptions" 
+                [type]="'bar'"
+                [plugins]="chartPlugins">
+                </canvas>
                 }
             </div>
         </div>
