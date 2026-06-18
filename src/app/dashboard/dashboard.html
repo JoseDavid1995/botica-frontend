@@ -1,35 +1,59 @@
 <div class="dashboard-container">
   <aside class="sidebar">
-    <div class="brand">
-      <fa-icon [icon]="iconoBotica"></fa-icon> <span>BOTICA PRO</span>
-    </div>
+    <div class="brand">BOTICA PRO</div>
     <nav class="menu">
-      <a class="menu-item active"><fa-icon [icon]="iconHome"></fa-icon> <span>Inicio</span></a>
-      <a class="menu-item"><fa-icon [icon]="iconBox"></fa-icon> <span>Inventario</span></a>
-      <a class="menu-item"><fa-icon [icon]="iconProfile"></fa-icon> <span>Mi Perfil</span></a>
+      <a class="menu-item active">
+        <fa-icon [icon]="iconHome"></fa-icon> Inicio
+      </a>
+      <a class="menu-item">
+        <fa-icon [icon]="iconBox"></fa-icon> Inventario
+      </a>
+      <a class="menu-item">
+        <fa-icon [icon]="iconProfile"></fa-icon> Mi Perfil
+      </a>
     </nav>
-    <div class="sidebar-footer">
-      <button class="btn-logout" (click)="onLogout()">
-        <fa-icon [icon]="iconLogout"></fa-icon> <span>Cerrar Sesión</span>
-      </button>
-    </div>
+    <button class="btn-logout" (click)="onLogout()">
+      <fa-icon [icon]="iconLogout"></fa-icon> Cerrar Sesión
+    </button>
   </aside>
 
-  <main class="content"> 
-    <header class="top-bar">
+  <main class="content">
+    <header class="top-header">
       <h2>Panel de Control</h2>
-      <div class="user-pill">Administrador</div>
+      <div class="admin-pill">Administrador</div>
     </header>
 
-    <section class="stats-grid">
-      <div class="stat-card"><h3>Productos</h3><p>1,284</p></div>
-      <div class="stat-card"><h3>Ventas Hoy</h3><p>S/ 450.00</p></div>
-      <div class="stat-card"><h3>Alertas</h3><p>3 pendientes</p></div>
-    </section>
+    <section class="dashboard-grid">
+      <div class="col-left">
+        <div class="stats-row">
+          <div class="stat-card"><h3>Productos</h3><p>1,284</p></div>
+          <div class="stat-card"><h3>Ventas Hoy</h3><p>S/ 450.00</p></div>
+          <div class="stat-card"><h3>Alertas</h3><p>3 pendientes</p></div>
+        </div>
+        <div class="card donut-card">
+            <h3>Distribución de Ventas</h3>
+            <div class="chart-wrapper">
+                @if (isChartReady) {
+                <canvas id="myDonutChart" baseChart [data]="donutChartData" [options]="donutChartOptions" [type]="'doughnut'"></canvas>
+                }
+            </div>
+        </div>
+      </div>
 
-    <div class="main-content-card">
-      <h3>Actividad Reciente</h3>
-      <div class="activity-placeholder">No hay movimientos recientes.</div>
-    </div>
+      <div class="col-right">
+        <div class="card bar-card">
+            <h3>Tendencias de Ventas Semanales</h3>
+            <div class="chart-wrapper">
+                @if (isChartReady) {
+                <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
+                }
+            </div>
+        </div>
+        <div class="card activity-card">
+          <h3>Actividad Reciente</h3>
+          <div class="activity-content">No hay movimientos recientes.</div>
+        </div>
+      </div>
+    </section>
   </main>
-</div> 
+</div>

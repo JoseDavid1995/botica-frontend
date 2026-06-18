@@ -11,10 +11,16 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  // Función auxiliar para saber si estamos en el navegador
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+  }
+
   login(credentials: any) {
     return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
       tap(response => {
-        if (response.success && response.data?.token) {
+        // Solo intentamos guardar si estamos en el navegador
+        if (response.success && response.data?.token && this.isBrowser()) {
           localStorage.setItem('token', response.data.token);
         }
       })
@@ -22,14 +28,21 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    // Solo eliminamos si estamos en el navegador
+    if (this.isBrowser()) {
+      localStorage.removeItem('token');
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    // Solo leemos si estamos en el navegador
+    if (this.isBrowser()) {
+      return localStorage.getItem('token');
+    }
+    return null; // Si estamos en el servidor, retornamos null
   }
 
   registrar(registroDto: UsuarioRegistroDto): Observable<any> {
-      return this.http.post<any>(`${this.apiUrl}/registrar`, registroDto);
-    }
+    return this.http.post<any>(`${this.apiUrl}/registrar`, registroDto);
+  }
 }
