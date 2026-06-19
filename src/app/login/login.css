@@ -8,13 +8,27 @@
   padding: 0;
 }
 
-.login-wrapper {
+/* .login-wrapper {
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: radial-gradient(circle at 80% 20%, #43324d 0%, #211c38 50%, #2d3e63 100%);
+  overflow: hidden;
+} */
+
+.login-wrapper {
+  width: 100vw;    /* 100% del ancho de la ventana */
+  height: 100vh;   /* 100% del alto de la ventana */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Tu gradiente específico para el login */
+  background: radial-gradient(circle at 80% 20%, #43324d 0%, #211c38 50%, #2d3e63 100%);
+  position: fixed; /* Asegura que se mantenga fijo cubriendo todo */
+  top: 0;
+  left: 0;
   overflow: hidden;
 }
 

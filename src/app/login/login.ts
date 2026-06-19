@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLock, faUser, faEnvelope, faEye, faEyeSlash, faTimes, faIdCard, faLeaf, faPrescriptionBottleMedical } from '@fortawesome/free-solid-svg-icons';
 import { UsuarioRegistroDto } from '../model/usuario.model';
 import { AuthService } from '../service/auth.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -42,7 +42,17 @@ export class Login {
     contrasena: ''
   };
 
-  constructor(private usuarioService: AuthService, private router: Router) {}
+  showSidebar = true;
+
+  constructor(private usuarioService: AuthService, private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Oculta el sidebar solo si estamos en la ruta 'login'
+        this.showSidebar = event.url !== '/login';
+      }
+    });
+  
+  }
 
 
   onRegistrar(event: Event): void {

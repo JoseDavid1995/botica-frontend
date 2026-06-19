@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SelectionModel } from '@angular/cdk/collections';
 
 export function getSpanishPaginatorIntl() {
 
@@ -67,6 +68,21 @@ export function getSpanishPaginatorIntl() {
   ]
 })
 export class Inventario implements AfterViewInit {
+
+  selection = new SelectionModel<any>(true, []);
+
+  // Verifica si todos los elementos están seleccionados
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
 
   displayedColumns: string[] = [
     'select',
