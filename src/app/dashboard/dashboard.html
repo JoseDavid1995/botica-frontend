@@ -3,7 +3,7 @@
     <div class="brand">BOTICA PRO</div>
     <nav class="menu">
       <a class="menu-item active"><fa-icon [icon]="iconHome"></fa-icon> Inicio</a>
-      <a class="menu-item"><fa-icon [icon]="iconBox"></fa-icon> Inventario</a>
+      <a class="menu-item" (click)="navigateToInventario()"><fa-icon [icon]="iconBox"></fa-icon> Inventario</a>
       <a class="menu-item"><fa-icon [icon]="iconProfile"></fa-icon> Mi Perfil</a>
     </nav>
     <button class="btn-logout" (click)="onLogout()">

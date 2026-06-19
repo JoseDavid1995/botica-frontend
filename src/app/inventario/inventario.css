@@ -1,0 +1,356 @@
+/* =====================================
+   FONDO GENERAL
+===================================== */
+
+.main-wrapper {
+
+  min-height: 100vh;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  background:
+
+    radial-gradient(
+      circle at top left,
+      rgba(59,130,246,.22),
+      transparent 25%
+    ),
+
+    radial-gradient(
+      circle at top right,
+      rgba(139,92,246,.18),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at bottom right,
+      rgba(16,185,129,.15),
+      transparent 30%
+    ),
+
+    linear-gradient(
+      135deg,
+      #eef4ff 0%,
+      #f8fbff 45%,
+      #eefaf7 100%
+    );
+}
+
+/* =====================================
+   CARD PRINCIPAL
+===================================== */
+
+.inventory-card {
+  background: rgba(255,255,255,.65);
+
+  backdrop-filter: blur(18px);
+
+  border-radius: 24px;
+
+  padding: 30px;
+
+  border: 1px solid rgba(255,255,255,.5);
+
+  box-shadow:
+    0 30px 60px rgba(15,23,42,.10),
+    0 15px 25px rgba(15,23,42,.06);
+}
+
+/* =====================================
+   HEADER
+===================================== */
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.table-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  color: #0f172a;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* =====================================
+   BUSCADOR
+===================================== */
+
+.search-field {
+  width: 330px;
+}
+
+::ng-deep .search-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+::ng-deep .search-field .mat-mdc-text-field-wrapper {
+  height: 48px !important;
+  background: white !important;
+  border-radius: 12px !important;
+}
+
+::ng-deep .search-field .mat-mdc-form-field-flex {
+  height: 48px !important;
+  align-items: center !important;
+}
+
+::ng-deep .search-field .mat-mdc-form-field-infix {
+  min-height: 48px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+::ng-deep .search-field input {
+  color: #0f172a !important;
+}
+
+/* =====================================
+   BOTONES
+===================================== */
+
+.btn-action {
+  height: 48px !important;
+  min-width: 130px;
+  border-radius: 12px !important;
+  font-weight: 600;
+}
+
+.export {
+  background: white !important;
+
+  border: 1px solid #dbe4f0 !important;
+
+  color: #334155 !important;
+}
+
+.export:hover {
+  background: #f8fafc !important;
+}
+
+.create {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #3b82f6
+    ) !important;
+
+  color: white !important;
+}
+
+.create:hover {
+  transform: translateY(-1px);
+}
+
+/* =====================================
+   TABLA
+===================================== */
+
+.table-container {
+
+  overflow: hidden;
+
+  border-radius: 22px;
+
+  padding: 2px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #60a5fa,
+      #818cf8,
+      #38bdf8
+    );
+
+  box-shadow:
+    0 15px 35px rgba(59,130,246,.18);
+
+}
+
+table {
+
+  width: 100%;
+
+  background: rgba(255,255,255,.97);
+
+  border-radius: 20px;
+
+  overflow: hidden;
+}
+
+/* =====================================
+   CABECERA TABLA
+===================================== */
+
+th.mat-mdc-header-cell {
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8fafc,
+      #edf4ff
+    ) !important;
+
+  color: #334155 !important;
+
+  font-size: 12px !important;
+
+  font-weight: 700 !important;
+
+  text-transform: uppercase;
+
+  border-bottom: 2px solid #dbeafe !important;
+}
+
+/* =====================================
+   CELDAS
+===================================== */
+
+td.mat-mdc-cell {
+
+  color: #334155 !important;
+
+  font-size: 14px !important;
+
+  border-bottom: 1px solid #edf2f7 !important;
+
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+/* =====================================
+   FILAS
+===================================== */
+
+tr.mat-mdc-row:nth-child(even) {
+  background: #fafcff;
+}
+
+tr.mat-mdc-row:nth-child(odd) {
+  background: white;
+}
+
+tr.mat-mdc-row {
+  transition:
+    background .25s ease,
+    transform .15s ease;
+}
+
+tr.mat-mdc-row:hover {
+
+  background: #eff6ff !important;
+
+  box-shadow:
+    inset 4px 0 0 #2563eb;
+
+  cursor: pointer;
+}
+
+/* =====================================
+   ACCIONES
+===================================== */
+
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.view {
+  color: #2563eb !important;
+}
+
+.edit {
+  color: #f59e0b !important;
+}
+
+.delete {
+  color: #ef4444 !important;
+}
+
+.view:hover,
+.edit:hover,
+.delete:hover {
+  transform: scale(1.12);
+  transition: .2s;
+}
+
+/* =====================================
+   PAGINADOR
+===================================== */
+
+::ng-deep .mat-mdc-paginator {
+
+  background: white !important;
+
+  border-top: 1px solid #dbe4f0;
+
+  margin-top: 12px;
+
+  border-radius: 0 0 18px 18px;
+}
+
+::ng-deep .mat-mdc-paginator-range-label {
+  color: #334155 !important;
+  font-weight: 500;
+}
+
+::ng-deep .mat-mdc-icon-button {
+  color: #2563eb !important;
+}
+
+/* =====================================
+   CHECKBOX
+===================================== */
+
+::ng-deep .mdc-checkbox__background {
+  border-color: #94a3b8 !important;
+}
+
+/* =====================================
+   ICONOS
+===================================== */
+
+mat-icon {
+  vertical-align: middle;
+}
+
+.subtitle {
+  display: block;
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.stock-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.table-container:hover {
+
+  transform: translateY(-2px);
+
+  transition: .3s ease;
+
+  box-shadow:
+    0 25px 50px rgba(59,130,246,.20);
+}

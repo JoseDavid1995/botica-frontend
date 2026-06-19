@@ -1,0 +1,210 @@
+<div class="main-wrapper">
+  <div class="inventory-card">
+
+    <!-- HEADER -->
+    <div class="table-header">
+
+      <div>
+        <h1>💊 Inventario PharmaSale</h1>
+        <span class="subtitle">
+          Gestión y control de medicamentos disponibles
+        </span>
+      </div>
+
+      <div class="header-actions">
+
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Buscar productos..."
+          >
+        </mat-form-field>
+
+        <button mat-flat-button class="btn-action export">
+          <mat-icon>file_download</mat-icon>
+          Exportar
+        </button>
+
+        <button mat-flat-button class="btn-action create">
+          <mat-icon>add</mat-icon>
+          Crear Venta
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- TABLA -->
+    <div class="table-container">
+
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+      >
+
+        <!-- CHECK -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox></mat-checkbox>
+          </th>
+
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- ID -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            ID
+          </th>
+
+          <td mat-cell *matCellDef="let m">
+            <strong>{{ m.id }}</strong>
+          </td>
+        </ng-container>
+
+        <!-- NOMBRE -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Nombre Medicamento
+          </th>
+
+          <td mat-cell *matCellDef="let m">
+            {{ m.nombre }}
+          </td>
+        </ng-container>
+
+        <!-- SKU -->
+        <ng-container matColumnDef="sku">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            SKU
+          </th>
+
+          <td mat-cell *matCellDef="let m">
+            {{ m.sku }}
+          </td>
+        </ng-container>
+
+        <!-- LOTE -->
+        <ng-container matColumnDef="lote">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Nº Lote
+          </th>
+
+          <td mat-cell *matCellDef="let m">
+            {{ m.lote }}
+          </td>
+        </ng-container>
+
+        <!-- CANTIDAD -->
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Cantidad
+          </th>
+
+          <td mat-cell *matCellDef="let m">
+            <span class="stock-badge">
+              {{ m.cantidad }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- PRECIO UNITARIO -->
+        <ng-container matColumnDef="precioUnitario">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Precio Unitario
+          </th>
+
+          <td mat-cell *matCellDef="let m">
+            $ {{ m.precioUnitario }}
+          </td>
+        </ng-container>
+
+        <!-- PRECIO TOTAL -->
+        <ng-container matColumnDef="precioTotal">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Precio Total
+          </th>
+
+          <td mat-cell *matCellDef="let m">
+            <strong>$ {{ m.precioTotal }}</strong>
+          </td>
+        </ng-container>
+
+        <!-- FECHA -->
+        <ng-container matColumnDef="vencimiento">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Fecha Vencimiento
+          </th>
+
+          <td mat-cell *matCellDef="let m">
+            {{ m.vencimiento }}
+          </td>
+        </ng-container>
+
+        <!-- ACCIONES -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>
+            Acciones
+          </th>
+
+          <td mat-cell *matCellDef="let m">
+
+            <div class="actions-container">
+
+              <button
+                mat-icon-button
+                class="view"
+                matTooltip="Ver"
+              >
+                <mat-icon>visibility</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                class="edit"
+                matTooltip="Editar"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                class="delete"
+                matTooltip="Eliminar"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+
+            </div>
+
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns"
+        ></tr>
+
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns;"
+        ></tr>
+
+      </table>
+
+    </div>
+
+    <!-- PAGINADOR -->
+    <mat-paginator
+      [pageSize]="5"
+      [pageSizeOptions]="[5,10,20]"
+      showFirstLastButtons>
+    </mat-paginator>
+
+  </div>
+</div>

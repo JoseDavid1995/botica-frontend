@@ -157,6 +157,8 @@ public barChartOptions: ChartOptions<'bar'> = {
   
   onLogout() { this.authService.logout(); this.router.navigate(['/login']); }
 
+  navigateToInventario() { this.router.navigate(['/inventario']); }
+
   // Agrega esto en tu clase Dashboard
 public getWeekData() {
   const dates: string[] = [];

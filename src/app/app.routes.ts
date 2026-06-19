@@ -15,5 +15,9 @@ export const routes: Routes = [
     path: 'dashboard', 
     loadComponent: () => import('./dashboard/dashboard').then(m => m.Dashboard),
     canActivate: [authGuard] // <--- Aquí proteges la ruta
+  },
+  { 
+    path: 'inventario', 
+    loadComponent: () => import('./inventario/inventario').then(m => m.Inventario)
   }
 ];
