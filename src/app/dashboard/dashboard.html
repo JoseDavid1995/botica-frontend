@@ -28,7 +28,7 @@
         <h3>Distribución de Ventas</h3>
         <div class="chart-wrapper">
           @if (isChartReady) {
-          <canvas id="myDonutChart" baseChart [data]="donutChartData" [options]="donutChartOptions" [plugins]="chartPlugins" [type]="'doughnut'"></canvas>
+          <canvas baseChart [data]="donutChartData" [options]="donutChartOptions" [plugins]="chartPlugins" [type]="'doughnut'"></canvas>
           }
         </div>
         <div class="custom-legend">
