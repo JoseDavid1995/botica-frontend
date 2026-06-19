@@ -2,15 +2,9 @@
   <aside class="sidebar">
     <div class="brand">BOTICA PRO</div>
     <nav class="menu">
-      <a class="menu-item active">
-        <fa-icon [icon]="iconHome"></fa-icon> Inicio
-      </a>
-      <a class="menu-item">
-        <fa-icon [icon]="iconBox"></fa-icon> Inventario
-      </a>
-      <a class="menu-item">
-        <fa-icon [icon]="iconProfile"></fa-icon> Mi Perfil
-      </a>
+      <a class="menu-item active"><fa-icon [icon]="iconHome"></fa-icon> Inicio</a>
+      <a class="menu-item"><fa-icon [icon]="iconBox"></fa-icon> Inventario</a>
+      <a class="menu-item"><fa-icon [icon]="iconProfile"></fa-icon> Mi Perfil</a>
     </nav>
     <button class="btn-logout" (click)="onLogout()">
       <fa-icon [icon]="iconLogout"></fa-icon> Cerrar Sesión
@@ -24,55 +18,47 @@
     </header>
 
     <section class="dashboard-grid">
-      <div class="col-left">
-        <div class="stats-row">
-          <div class="stat-card"><h3>Productos</h3><p>1,284</p></div>
-          <div class="stat-card"><h3>Ventas Hoy</h3><p>S/ 450.00</p></div>
-          <div class="stat-card"><h3>Alertas</h3><p>3 pendientes</p></div>
+      <div class="stats-row full-width">
+        <div class="stat-card"><h3>Productos</h3><p>1,284</p></div>
+        <div class="stat-card"><h3>Ventas Hoy</h3><p>S/ 450.00</p></div>
+        <div class="stat-card"><h3>Alertas</h3><p>3 pendientes</p></div>
+      </div>
+
+      <div class="card donut-card">
+        <h3>Distribución de Ventas</h3>
+        <div class="chart-wrapper">
+          @if (isChartReady) {
+          <canvas id="myDonutChart" baseChart [data]="donutChartData" [options]="donutChartOptions" [plugins]="chartPlugins" [type]="'doughnut'"></canvas>
+          }
         </div>
-        <div class="card donut-card">
-            <h3>Distribución de Ventas</h3>
-            <div class="chart-wrapper">
-                @if (isChartReady) {
-                <canvas 
-                id="myDonutChart" 
-                baseChart 
-                [data]="donutChartData" 
-                [options]="donutChartOptions" 
-                [plugins]="chartPlugins"
-                [type]="'doughnut'">
-                </canvas>
-                }
-            </div>
-            <div class="custom-legend">
-                <div class="legend-item"><span style="background: #3b82f6"></span> Genéricos</div>
-                <div class="legend-item"><span style="background: #10b981"></span> Higiene</div>
-                <div class="legend-item"><span style="background: #f59e0b"></span> Bebé</div>
-                <div class="legend-item"><span style="background: #8b5cf6"></span> Suplementos</div>
-            </div>
+        <div class="custom-legend">
+          <div class="legend-item"><span style="background: #3b82f6"></span> Genéricos</div>
+          <div class="legend-item"><span style="background: #10b981"></span> Higiene</div>
+          <div class="legend-item"><span style="background: #f59e0b"></span> Bebé</div>
+          <div class="legend-item"><span style="background: #8b5cf6"></span> Suplementos</div>
         </div>
       </div>
 
-      <div class="col-right">
-        <div class="card bar-card">
-            <h3>Tendencias de Ventas Semanales</h3>
-            <div class="chart-wrapper">
-                @if (isChartReady) {
-                <canvas 
-                baseChart 
-                [data]="barChartData" 
-                [options]="barChartOptions" 
-                [type]="'bar'"
-                [plugins]="chartPlugins">
-                </canvas>
-                }
-            </div>
+      <div class="card bar-card">
+        <h3>Tendencias de Ventas Semanales</h3>
+        <div class="chart-wrapper">
+          @if (isChartReady) {
+          <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'" [plugins]="chartPlugins"></canvas>
+          }
         </div>
-        <div class="card activity-card">
-          <h3>Actividad Reciente</h3>
-          <div class="activity-content">No hay movimientos recientes.</div>
-        </div>
+      </div>
+
+      <div class="card activity-card">
+        <h3>Actividad Reciente</h3>
+        <div class="activity-content">No hay movimientos recientes.</div>
       </div>
     </section>
   </main>
+
+  <nav class="mobile-nav">
+    <a class="mobile-item active"><fa-icon [icon]="iconHome"></fa-icon></a>
+    <a class="mobile-item"><fa-icon [icon]="iconBox"></fa-icon></a>
+    <a class="mobile-item"><fa-icon [icon]="iconProfile"></fa-icon></a>
+    <a class="mobile-item" (click)="onLogout()"><fa-icon [icon]="iconLogout"></fa-icon></a>
+  </nav>
 </div>
