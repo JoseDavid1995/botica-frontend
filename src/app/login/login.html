@@ -7,36 +7,45 @@
     </div>
 
     <form class="login-form" (submit)="onLogin()">
-      <div class="input-group">
-        <fa-icon [icon]="iconoCorreo" class="input-icon"></fa-icon>
-        <input
-          appEmailValidator
-          (isInvalid)="emailErrorLogin = $event"
-          type="email"
-          name="correoLogin"
-          placeholder="Correo Electrónico"
-          [(ngModel)]="loginData.correo"
-          required
-        />
+      <div class="input-group-modern">
+        <label class="input-label">Correo Electrónico</label>
+        <div class="input-wrapper-inner" [class.border-error]="emailErrorLogin">
+          <fa-icon [icon]="iconoCorreo" class="input-icon-botica"></fa-icon>
+          <input
+            appEmailValidator
+            (isInvalid)="emailErrorLogin = $event"
+            type="email"
+            name="correoLogin"
+            placeholder="Correo Electrónico"
+            [(ngModel)]="loginData.correo"
+            required
+          />
+        </div>
+        @if (emailErrorLogin) {
+          <span class="error-message">Formato de correo incorrecto</span>
+        }
       </div>
 
-      @if (emailErrorLogin) {
-        <span class="error-message">Formato de correo incorrecto</span>
-      }
-
-      <div class="input-group password-group">
-        <fa-icon [icon]="iconoCandado" class="input-icon"></fa-icon>
-        <input
-          appAlphaNumeric
-          [type]="ocultarPassword ? 'password' : 'text'"
-          name="passwordLogin"
-          placeholder="Contraseña"
-          [(ngModel)]="loginData.contrasena"
-          required
-        />
-        <button type="button" class="toggle-password" (click)="ocultarPassword = !ocultarPassword">
-          <fa-icon [icon]="ocultarPassword ? iconoOjoCerrado : iconoOjoAbierto"></fa-icon>
-        </button>
+      <div class="input-group-modern">
+        <label class="input-label">Contraseña</label>
+        <div class="input-wrapper-inner password-spatial">
+          <fa-icon [icon]="iconoCandado" class="input-icon-botica"></fa-icon>
+          <input
+            appAlphaNumeric
+            [type]="ocultarPassword ? 'password' : 'text'"
+            name="passwordLogin"
+            placeholder="••••••••••"
+            [(ngModel)]="loginData.contrasena"
+            required
+          />
+          <button
+            type="button"
+            class="toggle-password-botica"
+            (click)="ocultarPassword = !ocultarPassword"
+          >
+            <fa-icon [icon]="ocultarPassword ? iconoOjoCerrado : iconoOjoAbierto"></fa-icon>
+          </button>
+        </div>
       </div>
 
       <div class="form-options">
@@ -47,7 +56,7 @@
         <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
       </div>
 
-      <button type="submit" class="btn-login">INICIAR SESIÓN</button>
+      <button type="submit" class="btn-login" [disabled]="emailErrorLogin">INICIAR SESIÓN</button>
 
       <div class="register-redirect">
         <p>
@@ -62,21 +71,11 @@
 @if (mostrarModal) {
   <div class="modal-overlay">
     <div class="modal-card botica-glass">
-      <div class="geo-line line-1"></div>
-      <div class="geo-line line-2"></div>
-
       <button class="modal-close-btn" (click)="mostrarModal = false">
         <fa-icon [icon]="iconoCerrar"></fa-icon>
       </button>
 
-      <div class="modal-header-icon">
-        <div class="botica-logo-mini">
-          <span>BOTICA</span>
-        </div>
-      </div>
-
       <h2 class="modal-title">Crear Cuenta</h2>
-      <p class="modal-subtitle">Completa tus datos para registrarte</p>
 
       <form class="modal-form" (submit)="onRegistrar($event)">
         <div class="input-group-modern">
@@ -108,22 +107,7 @@
         </div>
 
         <div class="input-group-modern">
-          <label class="input-label">Apellidos</label>
-          <div class="input-wrapper-inner border-rose">
-            <fa-icon [icon]="iconoApellidos" class="input-icon-botica"></fa-icon>
-            <input
-              appOnlyText
-              name="apellidos"
-              placeholder="Ingrese apellidos"
-              [(ngModel)]="registroData.apellidos"
-              required
-            />
-          </div>
-        </div>
-
-        <div class="input-group-modern">
           <label class="input-label">Correo Electrónico</label>
-
           <div class="input-wrapper-inner" [class.border-error]="emailError">
             <fa-icon [icon]="iconoCorreo" class="input-icon-botica"></fa-icon>
             <input
@@ -131,12 +115,11 @@
               name="correo"
               appEmailValidator
               (isInvalid)="emailError = $event"
-              placeholder="Ingrese correo electrónico"
+              placeholder="correo@ejemplo.com"
               [(ngModel)]="registroData.correo"
               required
             />
           </div>
-
           @if (emailError) {
             <span class="error-message">Formato de correo incorrecto</span>
           }
@@ -144,7 +127,7 @@
 
         <div class="input-group-modern">
           <label class="input-label">Contraseña</label>
-          <div class="input-wrapper-inner border-green password-spatial">
+          <div class="input-wrapper-inner border-green">
             <fa-icon [icon]="iconoCandado" class="input-icon-botica"></fa-icon>
             <input
               appAlphaNumeric
@@ -154,15 +137,6 @@
               [(ngModel)]="registroData.contrasena"
               required
             />
-            <button
-              type="button"
-              class="toggle-password-botica"
-              (click)="ocultarPasswordRegistro = !ocultarPasswordRegistro"
-            >
-              <fa-icon
-                [icon]="ocultarPasswordRegistro ? iconoOjoCerrado : iconoOjoAbierto"
-              ></fa-icon>
-            </button>
           </div>
         </div>
 
