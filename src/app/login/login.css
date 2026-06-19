@@ -476,3 +476,18 @@
     opacity: 1;
   }
 }
+
+/* Esta clase solo afecta el borde del input */
+.border-error {
+  border: 2px solid #ef4444 !important;
+  outline: none; /* Evita que el navegador ponga su propio estilo por defecto */
+}
+
+/* Estilo limpio para el mensaje de error */
+.error-message {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  display: block;
+  font-family: sans-serif;
+}

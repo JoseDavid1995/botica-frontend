@@ -2,25 +2,32 @@ import { Component } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faLock, faUser, faEnvelope, faEye, faEyeSlash, faTimes, faIdCard, faLeaf, faPrescriptionBottleMedical } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faUser, faEnvelope, faEye, faEyeSlash, faTimes, faIdCard, faLeaf, faPrescriptionBottleMedical, faUserTag } from '@fortawesome/free-solid-svg-icons';
 import { UsuarioRegistroDto } from '../model/usuario.model';
 import { AuthService } from '../service/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { OnlyNumberDirective } from '../directives/only-number.directive';
+import { OnlyTextDirective } from '../directives/only-text.directive';
+import { EmailValidatorDirective } from '../directives/email-validator.directive.ts';
+import { AlphaNumericDirective } from '../directives/alpha-numeric.directive';
+
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FontAwesomeModule, FormsModule],
+  imports: [CommonModule, FontAwesomeModule, FormsModule, OnlyNumberDirective, OnlyTextDirective, EmailValidatorDirective, AlphaNumericDirective],
   templateUrl: './login.html',
   styleUrl: './login.css',
   standalone: true,
 })
 export class Login {
+  emailError: boolean = false;
+  emailErrorLogin: boolean = false;
   iconoUsuario = faUser;
   iconoCorreo = faEnvelope;
   iconoCandado = faLock; 
   iconoOjoAbierto = faEye;
   iconoOjoCerrado = faEyeSlash;
-  
+  iconoApellidos = faUserTag;
   iconoNatural = faLeaf; 
   iconoIdentidad = faIdCard;
   iconoCerrar = faTimes;
@@ -31,6 +38,7 @@ export class Login {
   mostrarModal = false;
 
   registroData: UsuarioRegistroDto = {
+    dni: null,
     nombres: '',
     apellidos: '',
     correo: '',
@@ -56,10 +64,9 @@ export class Login {
 
 
   onRegistrar(event: Event): void {
-    debugger
     event.preventDefault(); 
 
-    if (!this.registroData.nombres || !this.registroData.apellidos || !this.registroData.correo || !this.registroData.contrasena) {
+    if (!this.registroData.dni || !this.registroData.nombres || !this.registroData.apellidos || !this.registroData.correo || !this.registroData.contrasena) {
       alert('Por favor, completa todos los campos del formulario.');
       return;
     }
