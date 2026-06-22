@@ -1,5 +1,5 @@
 export interface UsuarioRegistroDto {
-  dni: number | null;
+  dni: string;
   nombres: string;
   apellidos: string;
   correo: string;

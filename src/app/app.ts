@@ -5,11 +5,12 @@ import { AuthService } from './service/auth.service';
 import { CommonModule } from '@angular/common';
 import { faBox, faHome, faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { AlertModal } from './components/alert-modal/alert-modal';
 
 @Component({
   selector: 'app-root',
   standalone: true, // Asegúrate de que sea standalone
-  imports: [RouterOutlet, MatIconModule, CommonModule, FaIconComponent, RouterLink, RouterLinkActive], // Agrega RouterLink y RouterLinkActive
+  imports: [RouterOutlet, MatIconModule, CommonModule, FaIconComponent, RouterLink, RouterLinkActive, AlertModal], // Agrega RouterLink y RouterLinkActive
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

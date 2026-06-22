@@ -11,43 +11,21 @@
         <label class="input-label">Correo Electrónico</label>
         <div class="input-wrapper-inner" [class.border-error]="emailErrorLogin">
           <fa-icon [icon]="iconoCorreo" class="input-icon-botica"></fa-icon>
-          <input
-            appEmailValidator
-            (isInvalid)="emailErrorLogin = $event"
-            type="email"
-            name="correoLogin"
-            placeholder="Correo Electrónico"
-            [(ngModel)]="loginData.correo"
-            required
-          />
+          <input appEmailValidator (isInvalid)="emailErrorLogin = $event" type="email" name="correoLogin" placeholder="Correo Electrónico" [(ngModel)]="loginData.correo" required />
         </div>
-        @if (emailErrorLogin) {
-          <span class="error-message">Formato de correo incorrecto</span>
-        }
+        @if (emailErrorLogin) { <span class="error-message">Formato de correo incorrecto</span> }
       </div>
 
       <div class="input-group-modern">
         <label class="input-label">Contraseña</label>
         <div class="input-wrapper-inner password-spatial">
           <fa-icon [icon]="iconoCandado" class="input-icon-botica"></fa-icon>
-          <input
-            appAlphaNumeric
-            [type]="ocultarPassword ? 'password' : 'text'"
-            name="passwordLogin"
-            placeholder="••••••••••"
-            [(ngModel)]="loginData.contrasena"
-            required
-          />
-          <button
-            type="button"
-            class="toggle-password-botica"
-            (click)="ocultarPassword = !ocultarPassword"
-          >
+          <input appAlphaNumeric [type]="ocultarPassword ? 'password' : 'text'" name="passwordLogin" placeholder="••••••••••" [(ngModel)]="loginData.contrasena" required />
+          <button type="button" class="toggle-password-botica" (click)="ocultarPassword = !ocultarPassword">
             <fa-icon [icon]="ocultarPassword ? iconoOjoCerrado : iconoOjoAbierto"></fa-icon>
           </button>
         </div>
       </div>
-
       <div class="form-options">
         <label class="remember-me">
           <input type="checkbox" />
@@ -57,88 +35,83 @@
       </div>
 
       <button type="submit" class="btn-login" [disabled]="emailErrorLogin">INICIAR SESIÓN</button>
-
       <div class="register-redirect">
-        <p>
-          ¿No tienes cuenta?
-          <a (click)="mostrarModal = true" class="register-link">Regístrate aquí</a>
-        </p>
+        <p>¿No tienes cuenta? <a (click)="abrirModalRegistro()" class="register-link">Regístrate aquí</a></p>
       </div>
     </form>
   </div>
 </div>
 
 @if (mostrarModal) {
-  <div class="modal-overlay">
+  <div class="modal-registro-overlay">
     <div class="modal-card botica-glass">
-      <button class="modal-close-btn" (click)="mostrarModal = false">
+      <button type="button" class="modal-close-btn" (click)="cerrarModal()">
         <fa-icon [icon]="iconoCerrar"></fa-icon>
       </button>
 
       <h2 class="modal-title">Crear Cuenta</h2>
 
-      <form class="modal-form" (submit)="onRegistrar($event)">
+      <form #registroForm="ngForm" class="modal-form" (submit)="onRegistrar(registroForm)">
+        
         <div class="input-group-modern">
           <label class="input-label">DNI</label>
-          <div class="input-wrapper-inner border-rose">
+          <div class="input-wrapper-inner" [class.border-error]="dni.invalid && (dni.touched || registroForm.submitted)">
             <fa-icon [icon]="iconoIdentidad" class="input-icon-botica"></fa-icon>
-            <input
-              appOnlyNumber
-              name="dni"
-              placeholder="Ingrese DNI"
-              [(ngModel)]="registroData.dni"
-              required
-            />
+            <input appOnlyNumber name="dni" #dni="ngModel" [(ngModel)]="registroData.dni" placeholder="Ingrese DNI" required minlength="8" maxlength="8" />
           </div>
+          @if (dni.invalid && (dni.touched || registroForm.submitted)) { <span class="error-message">Debe contener 8 dígitos</span> }
         </div>
 
         <div class="input-group-modern">
           <label class="input-label">Nombres</label>
-          <div class="input-wrapper-inner border-rose">
+          <div class="input-wrapper-inner" [class.border-error]="nombres.invalid && (nombres.touched || registroForm.submitted)">
             <fa-icon [icon]="iconoUsuario" class="input-icon-botica"></fa-icon>
-            <input
-              appOnlyText
-              name="nombres"
-              placeholder="Ingrese nombres"
-              [(ngModel)]="registroData.nombres"
-              required
-            />
+            <input appOnlyText name="nombres" #nombres="ngModel" [(ngModel)]="registroData.nombres" placeholder="Ingrese nombres" required />
           </div>
+          @if (nombres.invalid && (nombres.touched || registroForm.submitted)) { <span class="error-message">Campo requerido</span> }
+        </div>
+
+        <div class="input-group-modern">
+          <label class="input-label">Apellidos</label>
+          <div class="input-wrapper-inner" [class.border-error]="apellidos.invalid && (apellidos.touched || registroForm.submitted)">
+            <fa-icon [icon]="iconoUsuario" class="input-icon-botica"></fa-icon>
+            <input appOnlyText name="apellidos" #apellidos="ngModel" [(ngModel)]="registroData.apellidos" placeholder="Ingrese apellidos" required />
+          </div>
+          @if (apellidos.invalid && (apellidos.touched || registroForm.submitted)) { <span class="error-message">Campo requerido</span> }
         </div>
 
         <div class="input-group-modern">
           <label class="input-label">Correo Electrónico</label>
-          <div class="input-wrapper-inner" [class.border-error]="emailError">
+          <div class="input-wrapper-inner" [class.border-error]="correo.invalid && (correo.touched || registroForm.submitted)">
             <fa-icon [icon]="iconoCorreo" class="input-icon-botica"></fa-icon>
-            <input
-              type="email"
-              name="correo"
-              appEmailValidator
-              (isInvalid)="emailError = $event"
-              placeholder="correo@ejemplo.com"
-              [(ngModel)]="registroData.correo"
-              required
-            />
+            <input type="email" name="correo" #correo="ngModel" [(ngModel)]="registroData.correo" appEmailValidator (isInvalid)="emailError = $event" placeholder="correo@ejemplo.com" required />
           </div>
-          @if (emailError) {
-            <span class="error-message">Formato de correo incorrecto</span>
-          }
+          @if (correo.invalid && (correo.touched || registroForm.submitted)) { <span class="error-message">Correo inválido o requerido</span> }
         </div>
 
         <div class="input-group-modern">
-          <label class="input-label">Contraseña</label>
-          <div class="input-wrapper-inner border-green">
-            <fa-icon [icon]="iconoCandado" class="input-icon-botica"></fa-icon>
-            <input
-              appAlphaNumeric
-              [type]="ocultarPasswordRegistro ? 'password' : 'text'"
-              name="contrasena"
-              placeholder="••••••••••"
-              [(ngModel)]="registroData.contrasena"
-              required
-            />
-          </div>
-        </div>
+  <label class="input-label">Contraseña</label>
+  <div class="input-wrapper-inner password-spatial" [class.border-error]="contrasena.invalid && (contrasena.touched || registroForm.submitted)">
+    <fa-icon [icon]="iconoCandado" class="input-icon-botica"></fa-icon>
+    
+    <input 
+      appAlphaNumeric 
+      [type]="ocultarPasswordRegistro ? 'password' : 'text'" 
+      name="contrasena" 
+      #contrasena="ngModel" 
+      [(ngModel)]="registroData.contrasena" 
+      placeholder="••••••••••" 
+      required 
+    />
+    
+    <button type="button" class="toggle-password-botica" (click)="ocultarPasswordRegistro = !ocultarPasswordRegistro">
+      <fa-icon [icon]="ocultarPasswordRegistro ? iconoOjoCerrado : iconoOjoAbierto"></fa-icon>
+    </button>
+  </div>
+  @if (contrasena.invalid && (contrasena.touched || registroForm.submitted)) { 
+    <span class="error-message">Contraseña requerida</span> 
+  }
+</div>
 
         <button type="submit" class="btn-registrarme-botica">REGISTRARME</button>
       </form>

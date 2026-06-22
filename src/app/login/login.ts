@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -10,6 +10,8 @@ import { OnlyNumberDirective } from '../directives/only-number.directive';
 import { OnlyTextDirective } from '../directives/only-text.directive';
 import { EmailValidatorDirective } from '../directives/email-validator.directive.ts';
 import { AlphaNumericDirective } from '../directives/alpha-numeric.directive';
+import { AlertService } from '../services/alert';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -19,7 +21,7 @@ import { AlphaNumericDirective } from '../directives/alpha-numeric.directive';
   styleUrl: './login.css',
   standalone: true,
 })
-export class Login {
+export class Login implements OnInit {
   emailError: boolean = false;
   emailErrorLogin: boolean = false;
   iconoUsuario = faUser;
@@ -38,7 +40,7 @@ export class Login {
   mostrarModal = false;
 
   registroData: UsuarioRegistroDto = {
-    dni: null,
+    dni: '',
     nombres: '',
     apellidos: '',
     correo: '',
@@ -52,7 +54,11 @@ export class Login {
 
   showSidebar = true;
 
-  constructor(private usuarioService: AuthService, private router: Router) {
+  ngOnInit() {
+ console.log(this.mostrarModal)
+  }
+
+  constructor(private usuarioService: AuthService, private router: Router, private alertService: AlertService, private ngZone: NgZone, private cdr: ChangeDetectorRef) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         // Oculta el sidebar solo si estamos en la ruta 'login'
@@ -63,38 +69,44 @@ export class Login {
   }
 
 
-  onRegistrar(event: Event): void {
-    event.preventDefault(); 
+  onRegistrar(form: NgForm): void {
+   form.form.markAllAsTouched();
 
     if (!this.registroData.dni || !this.registroData.nombres || !this.registroData.apellidos || !this.registroData.correo || !this.registroData.contrasena) {
-      alert('Por favor, completa todos los campos del formulario.');
-      return;
+      this.alertService.show("Campos incompletos", "Por favor, completa todos los campos del formulario.", "error");      return;
     }
 
     this.usuarioService.registrar(this.registroData).subscribe({
-      next: (usuarioCreado) => {
-        alert('¡Cuenta creada de forma exitosa!');
-        this.mostrarModal = false; 
+      next: () => {
+     this.cerrarModal(); 
+      // 2. Éxito
+      setTimeout(() => {
+        this.alertService.show("Éxito", "¡Cuenta creada exitosamente!", "success");
+      }, 100);
       },
       error: (err) => {
+        let mensajeError = 'Ocurrió un error inesperado.';
         if (err.status === 400) {
-          alert(`Error de registro: ${err.error}`);
+          mensajeError = err.error?.mensaje || "Error en los datos enviados.";
         } else if (err.status === 500) {
-          alert('Error de servidor: Ocurrió un fallo inesperado en el sistema.');
-        } else {
-          alert('No se pudo establecer comunicación con el servidor. Verifica tu conexión.');
+          mensajeError = 'Error de servidor: Intente más tarde.';
         }
+        this.alertService.show("Error de Registro", mensajeError, "error");
       }
     });
   }
 
   onLogin() {
+    debugger
+
     this.usuarioService.login(this.loginData).subscribe({
       next: (res) => {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        console.error("Error al iniciar sesión", err);
+        const mensaje = err.error?.mensaje || "Correo o contraseña incorrectos.";
+        console.log("Disparando modal con:", mensaje); // ¿Ves esto en la consola?
+        this.alertService.show("Error de Acceso", mensaje, "error");
       }
     });
   }
@@ -104,4 +116,29 @@ export class Login {
     this.router.navigate(['/login']);
   }
 
+  private resetFormulario() {
+  this.registroData = {
+    dni: '',
+    nombres: '',
+    apellidos: '',
+    correo: '',
+    contrasena: ''
+  };
+  this.emailError = false; // También reinicia los errores
+}
+
+// Modifica tus funciones de cierre
+cerrarModal() {
+  this.mostrarModal = false;
+  this.resetFormulario(); // Limpia los datos
+   console.log(this.mostrarModal)
+   this.cdr.detectChanges();
+   // Cierra la modal
+}
+
+abrirModalRegistro() {
+  this.resetFormulario(); // Limpiamos los datos primero
+  this.mostrarModal = true; // Luego abrimos la modal
+  console.log(this.mostrarModal)
+}
 }

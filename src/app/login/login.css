@@ -234,7 +234,7 @@
    ========================================================================== */
 
 /* Capa de fondo que oscurece suavemente y difumina tu gradiente radial */
-.modal-overlay {
+.modal-registro-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -244,7 +244,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9000;
   backdrop-filter: blur(10px); 
   -webkit-backdrop-filter: blur(10px);
 }
@@ -388,6 +388,9 @@
 /* Control del ojito del modal */
 .password-spatial {
   position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .toggle-password-botica {
@@ -400,6 +403,11 @@
   display: flex;
   align-items: center;
   padding: 0;
+  z-index: 5; /* Asegura que esté por encima del input */
+}
+
+.password-spatial input {
+  padding-right: 45px !important; 
 }
 
 .toggle-password-botica:hover {

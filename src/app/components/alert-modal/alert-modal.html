@@ -1,0 +1,14 @@
+@if (alertData(); as data) {
+  <div class="modal-overlay">
+    <div class="modal-card">
+      <div class="icon-circle" [ngClass]="data.tipo">
+        <fa-icon [icon]="data.tipo === 'success' ? iconoCheck : iconoError"></fa-icon>
+      </div>
+
+      <h2>{{ data.titulo }}</h2>
+      <p>{{ data.mensaje }}</p>
+      
+      <button class="btn-aceptar" (click)="close()">Entendido</button>
+    </div>
+  </div>
+}

@@ -1,0 +1,57 @@
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(10, 10, 15, 0.6); /* Un negro más azulado/elegante */
+  backdrop-filter: blur(10px);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 9999;
+}
+
+.modal-card {
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 30px;
+  text-align: center;
+  width: 90%; max-width: 400px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.icon-circle {
+  width: 80px; height: 80px;
+  border-radius: 24px; /* Un cuadrado redondeado se ve más moderno */
+  display: flex; justify-content: center; align-items: center;
+  margin: 0 auto 1.5rem auto;
+  font-size: 2.5rem;
+}
+
+/* Colores más suaves */
+.success { background: #dcfce7; color: #166534; }
+.error { background: #fee2e2; color: #991b1b; }
+
+.modal-card h2 {
+  font-size: 1.6rem;
+  margin: 0 0 0.5rem 0;
+  color: #1f2937;
+  font-weight: 700;
+}
+
+.modal-card p {
+  color: #6b7280;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.btn-aceptar {
+  width: 100%;
+  background: #111827;
+  color: white;
+  padding: 1.1rem;
+  border-radius: 16px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-aceptar:hover { background: #374151; transform: translateY(-2px); }
