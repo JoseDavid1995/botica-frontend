@@ -49,4 +49,5 @@ export class AuthService {
   recuperarContrasena(usuarioRecuperacionDto: UsuarioRecuperacionDto): Observable<any> {
   return this.http.post(`${this.apiUrl}/recuperar-contrasena`, usuarioRecuperacionDto);
 }
+
 }

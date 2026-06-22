@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
@@ -14,6 +14,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
+import { AlertService } from '../services/alert';
+import { AuthService } from '../service/auth.service';
+import { MedicamentosService } from '../service/medicamentos.service';
 
 export function getSpanishPaginatorIntl() {
 
@@ -68,6 +71,10 @@ export function getSpanishPaginatorIntl() {
   ]
 })
 export class Inventario implements AfterViewInit {
+
+    constructor(private medicamentosService: MedicamentosService,private alertService: AlertService,  private cdr: ChangeDetectorRef) {
+    }
+
 
   selection = new SelectionModel<any>(true, []);
 
@@ -137,6 +144,36 @@ export class Inventario implements AfterViewInit {
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+  }
+
+  onFileSelected(event: any) {
+  
+    const file: File = event.target.files[0];
+    
+    if (file) {
+      // Validación básica de extensión
+      if (file.type !== 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' && 
+          file.type !== 'application/vnd.ms-excel') {
+        this.alertService.show("Error", "Por favor, selecciona un archivo Excel válido (.xlsx o .xls).", "error");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      this.alertService.show("Procesando", "Subiendo y procesando archivo...", "success");
+
+      // Llamada al servicio que definimos anteriormente
+      this.medicamentosService.subirExcel(formData).subscribe({
+        next: (res) => {
+          this.alertService.show("Éxito", res.mensaje || "Archivo procesado y datos actualizados.", "success");
+          //this.cargarTabla(); // Método que recarga tus datos de la tabla
+        },
+        error: (err) => {
+          this.alertService.show("Error", "No se pudo procesar el archivo. Revisa el formato.", "error");
+        }
+      });
     }
   }
 }

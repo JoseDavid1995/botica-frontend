@@ -12,6 +12,17 @@
           <input matInput (keyup)="applyFilter($event)" placeholder="Buscar productos..." />
         </mat-form-field>
 
+        <button mat-flat-button class="btn-action upload" (click)="fileInput.click()">
+          <mat-icon>upload_file</mat-icon> Cargar ICI
+        </button>
+        <input
+          type="file"
+          #fileInput
+          (change)="onFileSelected($event)"
+          accept=".xlsx, .xls"
+          style="display: none"
+        />
+
         <button mat-flat-button class="btn-action export">
           <mat-icon>file_download</mat-icon> Exportar
         </button>

@@ -115,3 +115,8 @@ td.mat-mdc-cell {
 
 
 
+.btn-action.upload {
+  background-color: #3b82f6; /* Color azul para destacar */
+  color: white;
+}
+
