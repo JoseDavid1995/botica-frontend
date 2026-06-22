@@ -37,6 +37,7 @@ export class Login implements OnInit {
 
   ocultarPassword = true;
   ocultarPasswordRegistro = true; 
+  ocultarPasswordNuevo = true; 
   mostrarModal = false;
 
   registroData: UsuarioRegistroDto = {

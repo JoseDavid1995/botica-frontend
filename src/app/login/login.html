@@ -253,13 +253,20 @@
             <fa-icon [icon]="iconoCandado" class="input-icon-botica"></fa-icon>
             <input
               appAlphaNumeric
-              type="password"
+              [type]="ocultarPasswordNuevo ? 'password' : 'text'"
               name="passRec"
               #passRec="ngModel"
               [(ngModel)]="recuperarData.contrasena"
               placeholder="••••••••••"
               required
             />
+            <button
+              type="button"
+              class="toggle-password-botica"
+              (click)="ocultarPasswordNuevo = !ocultarPasswordNuevo"
+            >
+              <fa-icon [icon]="ocultarPasswordNuevo ? iconoOjoCerrado : iconoOjoAbierto"></fa-icon>
+            </button>
           </div>
           @if (passRec.invalid && (passRec.touched || recupForm.submitted)) {
             <span class="error-message">Campo requerido</span>
