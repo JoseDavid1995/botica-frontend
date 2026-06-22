@@ -12,109 +12,140 @@
           <input matInput (keyup)="applyFilter($event)" placeholder="Buscar productos..." />
         </mat-form-field>
 
-        <button mat-flat-button class="btn-action upload" (click)="fileInput.click()">
-          <mat-icon>upload_file</mat-icon> Cargar ICI
-        </button>
-        <input
-          type="file"
-          #fileInput
-          (change)="onFileSelected($event)"
-          accept=".xlsx, .xls"
-          style="display: none"
-        />
-
-        <button mat-flat-button class="btn-action export">
-          <mat-icon>file_download</mat-icon> Exportar
-        </button>
-
-        <button mat-flat-button class="btn-action create">
-          <mat-icon>add</mat-icon> Crear Venta
-        </button>
+        <div class="buttons-grid">
+          <button mat-flat-button class="btn-action upload" (click)="fileInput.click()">
+            <mat-icon>upload_file</mat-icon> Cargar ICI
+          </button>
+          <input
+            type="file"
+            #fileInput
+            (change)="onFileSelected($event)"
+            accept=".xlsx, .xls"
+            style="display: none"
+          />
+          <button mat-flat-button class="btn-action export">
+            <mat-icon>file_download</mat-icon> Exportar
+          </button>
+          <button mat-flat-button class="btn-action create">
+            <mat-icon>add</mat-icon> Crear Venta
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="table-container">
+    <div class="table-container desktop-only">
       <table mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="select">
-          <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox
-              (change)="$event ? masterToggle() : null"
-              [checked]="selection.hasValue() && isAllSelected()"
-              [indeterminate]="selection.hasValue() && !isAllSelected()"
-            >
-            </mat-checkbox>
-          </th>
-          <td mat-cell *matCellDef="let row">
-            <mat-checkbox
-              (click)="$event.stopPropagation()"
-              (change)="$event ? selection.toggle(row) : null"
-              [checked]="selection.isSelected(row)"
-            >
-            </mat-checkbox>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <ng-container matColumnDef="id"
+          ><th mat-header-cell *matHeaderCellDef>ID</th>
           <td mat-cell *matCellDef="let m">
             <strong>{{ m.id }}</strong>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="nombre">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
-          <td mat-cell *matCellDef="let m">{{ m.nombre }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="sku">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>SKU</th>
-          <td mat-cell *matCellDef="let m">{{ m.sku }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="lote">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Nº Lote</th>
-          <td mat-cell *matCellDef="let m">{{ m.lote }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="cantidad">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Cantidad</th>
+          </td></ng-container
+        >
+        <ng-container matColumnDef="nombre"
+          ><th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let m">{{ m.nombre }}</td></ng-container
+        >
+        <ng-container matColumnDef="sku"
+          ><th mat-header-cell *matHeaderCellDef>SKU</th>
+          <td mat-cell *matCellDef="let m">{{ m.sku }}</td></ng-container
+        >
+        <ng-container matColumnDef="lote"
+          ><th mat-header-cell *matHeaderCellDef>Nº Lote</th>
+          <td mat-cell *matCellDef="let m">{{ m.lote }}</td></ng-container
+        >
+        <ng-container matColumnDef="cantidad"
+          ><th mat-header-cell *matHeaderCellDef>Cantidad</th>
           <td mat-cell *matCellDef="let m">
             <span class="stock-badge">{{ m.cantidad }}</span>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="precioUnitario">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Precio U.</th>
-          <td mat-cell *matCellDef="let m">$ {{ m.precioUnitario }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="precioTotal">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Total</th>
+          </td></ng-container
+        >
+        <ng-container matColumnDef="precioTotal"
+          ><th mat-header-cell *matHeaderCellDef>Total</th>
           <td mat-cell *matCellDef="let m">
             <strong>$ {{ m.precioTotal }}</strong>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="vencimiento">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Vencimiento</th>
-          <td mat-cell *matCellDef="let m">{{ m.vencimiento }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          </td></ng-container
+        >
+        <ng-container matColumnDef="vencimiento"
+          ><th mat-header-cell *matHeaderCellDef>Vencimiento</th>
+          <td mat-cell *matCellDef="let m">{{ m.vencimiento }}</td></ng-container
+        >
+        <ng-container matColumnDef="acciones"
+          ><th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let m">
             <div class="actions-container">
-              <button mat-icon-button class="view"><mat-icon>visibility</mat-icon></button>
-              <button mat-icon-button class="edit"><mat-icon>edit</mat-icon></button>
-              <button mat-icon-button class="delete"><mat-icon>delete</mat-icon></button>
+              <button mat-icon-button class="view"><mat-icon>visibility</mat-icon></button
+              ><button mat-icon-button class="edit"><mat-icon>edit</mat-icon></button
+              ><button mat-icon-button class="delete"><mat-icon>delete</mat-icon></button>
             </div>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </td></ng-container
+        >
+        <tr
+          mat-header-row
+          *matHeaderRowDef="[
+            'id',
+            'nombre',
+            'sku',
+            'lote',
+            'cantidad',
+            'precioTotal',
+            'vencimiento',
+            'acciones',
+          ]"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="
+            let row;
+            columns: [
+              'id',
+              'nombre',
+              'sku',
+              'lote',
+              'cantidad',
+              'precioTotal',
+              'vencimiento',
+              'acciones',
+            ]
+          "
+        ></tr>
       </table>
     </div>
+
+    <div class="mobile-only mobile-container">
+      <div class="card-item" *ngFor="let m of dataSource.connect() | async">
+        <div class="card-top">
+          <span class="card-id">{{ m.id }}</span>
+          <strong class="card-title">{{ m.nombre }}</strong>
+        </div>
+        <div class="card-body">
+          <div class="data-row">
+            <div class="data-col">
+              <span>SKU</span><strong>{{ m.sku }}</strong>
+            </div>
+            <div class="data-col">
+              <span>Lote</span><strong>{{ m.lote }}</strong>
+            </div>
+          </div>
+          <div class="data-row">
+            <div class="data-col">
+              <span>Stock</span><strong class="text-blue">{{ m.cantidad }}</strong>
+            </div>
+            <div class="data-col">
+              <span>Total</span><strong>$ {{ m.precioTotal }}</strong>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="date-tag">Venc: {{ m.vencimiento }}</span>
+          <div class="actions">
+            <button mat-icon-button class="view"><mat-icon>visibility</mat-icon></button>
+            <button mat-icon-button class="edit"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button class="delete"><mat-icon>delete</mat-icon></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <mat-paginator
       [pageSize]="10"
       [pageSizeOptions]="[10, 20, 50]"
