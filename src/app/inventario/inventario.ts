@@ -17,6 +17,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { AlertService } from '../services/alert';
 import { AuthService } from '../service/auth.service';
 import { MedicamentosService } from '../service/medicamentos.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 export function getSpanishPaginatorIntl() {
 
@@ -72,7 +73,13 @@ export function getSpanishPaginatorIntl() {
 })
 export class Inventario implements AfterViewInit {
 
-    constructor(private medicamentosService: MedicamentosService,private alertService: AlertService,  private cdr: ChangeDetectorRef) {
+    constructor(private medicamentosService: MedicamentosService,private alertService: AlertService,  private cdr: ChangeDetectorRef, private breakpointObserver: BreakpointObserver) {
+      this.breakpointObserver.observe(['(max-width: 850px)']).subscribe(result => {
+    if (this.paginator) {
+      this.paginator.pageSize = result.matches ? 5 : 10;
+      this.dataSource.paginator = this.paginator; // Refrescar la vista
+    }
+  });
     }
 
 
