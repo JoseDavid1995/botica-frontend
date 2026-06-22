@@ -3,7 +3,7 @@ import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLock, faUser, faEnvelope, faEye, faEyeSlash, faTimes, faIdCard, faLeaf, faPrescriptionBottleMedical, faUserTag } from '@fortawesome/free-solid-svg-icons';
-import { UsuarioRegistroDto } from '../model/usuario.model';
+import { UsuarioRecuperacionDto, UsuarioRegistroDto } from '../model/usuario.model';
 import { AuthService } from '../service/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { OnlyNumberDirective } from '../directives/only-number.directive';
@@ -51,6 +51,9 @@ export class Login implements OnInit {
     correo: '',
     contrasena: ''
   };
+
+  mostrarModalRecuperacion = false;
+  recuperarData: UsuarioRecuperacionDto = { dni: '', contrasena: '' };
 
   showSidebar = true;
 
@@ -140,5 +143,38 @@ abrirModalRegistro() {
   this.resetFormulario(); // Limpiamos los datos primero
   this.mostrarModal = true; // Luego abrimos la modal
   console.log(this.mostrarModal)
+}
+
+abrirModalRecuperacion() {
+  this.mostrarModalRecuperacion = true;
+}
+
+cerrarModalRecuperacion() {
+  this.mostrarModalRecuperacion = false;
+  this.recuperarData = { dni: '', contrasena: '' };
+  this.cdr.detectChanges();
+}
+
+// Agrega esto dentro de tu clase Login
+onRecuperar(form: NgForm): void {
+  debugger
+  form.form.markAllAsTouched();
+
+    if (!this.recuperarData.dni || !this.recuperarData.contrasena) {
+      this.alertService.show("Campos incompletos", "Por favor, completa todos los campos del formulario.", "error");      return;
+    }
+
+  // 2. Consumir servicio
+  this.usuarioService.recuperarContrasena(this.recuperarData).subscribe({
+    next: (res) => {
+      this.cerrarModalRecuperacion();
+      this.alertService.show("Éxito", "¡Contraseña actualizada correctamente!", "success");
+    },
+    error: (err) => {
+      // 3. Manejo de errores
+      const mensaje = err.error?.mensaje || "No se pudo actualizar la contraseña.";
+      this.alertService.show("Error", mensaje, "error");
+    }
+  });
 }
 }

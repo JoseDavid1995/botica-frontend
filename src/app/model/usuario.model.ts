@@ -5,3 +5,9 @@ export interface UsuarioRegistroDto {
   correo: string;
   contrasena: string;
 }
+
+
+export interface UsuarioRecuperacionDto {
+  dni: string;
+  contrasena: string;
+}

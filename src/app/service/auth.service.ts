@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { UsuarioRegistroDto } from '../model/usuario.model';
+import { UsuarioRecuperacionDto, UsuarioRegistroDto } from '../model/usuario.model';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -45,4 +45,8 @@ export class AuthService {
   registrar(registroDto: UsuarioRegistroDto): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/registrar`, registroDto);
   }
+
+  recuperarContrasena(usuarioRecuperacionDto: UsuarioRecuperacionDto): Observable<any> {
+  return this.http.post(`${this.apiUrl}/recuperar-contrasena`, usuarioRecuperacionDto);
+}
 }
