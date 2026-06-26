@@ -37,7 +37,6 @@ export class Dashboard implements AfterViewInit {
   };
 }
 
-  // PLUGIN DEFINITIVO: Dibuja líneas desde el centro del sector hasta el label
   public connectorPlugin: Plugin = {
     id: 'connectorLines',
     afterDraw: (chart: any) => {
@@ -52,7 +51,7 @@ export class Dashboard implements AfterViewInit {
           const radius = element.outerRadius;
           
           ctx.save();
-          ctx.strokeStyle = '#ffffff'; // Línea blanca
+          ctx.strokeStyle = '#ffffff'; 
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
@@ -97,26 +96,6 @@ export class Dashboard implements AfterViewInit {
     }]
   };
 
-  // ... dentro de tu clase Dashboard
-
-/* public barChartData: ChartConfiguration<'bar'>['data'] = {
-  labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
-  datasets: [{ 
-    data: [65, 59, 80, 81, 56, 55, 40], 
-    // Cambiamos el color único por un array de colores para que cada barra sea distinta
-    backgroundColor: [
-      '#3b82f6', // Lun
-      '#0ea5e9', // Mar
-      '#10b981', // Mié
-      '#f59e0b', // Jue
-      '#3b82f6', // Vie
-      '#8b5cf6', // Sáb
-      '#f43f5e'  // Dom
-    ], 
-    borderRadius: 4 
-  }]
-}; */
-
 public barChartOptions: ChartOptions<'bar'> = {
   responsive: true,
   maintainAspectRatio: false,
@@ -124,7 +103,6 @@ public barChartOptions: ChartOptions<'bar'> = {
     legend: { display: false },
     tooltip: {
       enabled: true,
-      // Esto fuerza al tooltip a mostrar los callbacks correctamente
       callbacks: {
         title: (context: any) => {
           return `Fecha: ${context[0].label}`;
@@ -148,7 +126,6 @@ public barChartOptions: ChartOptions<'bar'> = {
   constructor(private authService: AuthService, private router: Router, private cdr: ChangeDetectorRef) {}
   
   ngAfterViewInit() { 
-    // Usamos un timeout mayor para asegurar que los elementos del DOM estén listos
     setTimeout(() => { 
       this.isChartReady = true; 
       this.cdr.detectChanges(); 
@@ -159,7 +136,6 @@ public barChartOptions: ChartOptions<'bar'> = {
 
   navigateToInventario() { this.router.navigate(['/inventario']); }
 
-  // Agrega esto en tu clase Dashboard
 public getWeekData() {
   const dates: string[] = [];
   const data: number[] = [];
@@ -173,7 +149,6 @@ public getWeekData() {
     const current = new Date(today);
     current.setDate(today.getDate() + i);
     
-    // Cambiamos el formato para incluir el año (ej: '18 jun 2026')
     dates.push(current.toLocaleDateString('es-ES', { 
       day: 'numeric', 
       month: 'short', 

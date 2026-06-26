@@ -1,14 +1,11 @@
-/* --- ESTRUCTURA PRINCIPAL --- */
 .main-wrapper { display: flex; flex-direction: column; height: 100%; box-sizing: border-box; padding: 20px; }
 .inventory-card { flex: 1; display: flex; flex-direction: column; background: white; border-radius: 24px; padding: 30px; overflow: hidden; }
 
-/* --- HEADER --- */
 .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 20px; }
 .header-actions { display: flex; flex-direction: column; gap: 15px; width: 100%; }
 .search-field { width: 100%; height: 48px; }
 .buttons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-/* --- RESPONSIVE --- */
 @media (min-width: 851px) { 
   .mobile-only { display: none; } 
   .header-actions { flex-direction: row; width: auto; }
@@ -17,23 +14,19 @@
 }
 @media (max-width: 850px) { .desktop-only { display: none; } }
 
-/* --- BOTONES --- */
 .btn-action { height: 48px !important; border-radius: 12px !important; font-weight: 600; }
 .upload { background-color: #3b82f6 !important; color: white !important; }
 .export { background: white !important; border: 1px solid #dbe4f0 !important; color: #334155 !important; }
 .create { background: linear-gradient(135deg, #2563eb, #3b82f6) !important; color: white !important; }
 
-/* --- TABLA ESCRITORIO (CORREGIDO) --- */
 .table-container { flex: 1; overflow-y: auto; margin-top: 20px; border: 1px solid #e2e8f0; border-radius: 12px; }
 
-/* Centrado sin romper el layout de tabla */
 ::ng-deep .mat-mdc-header-cell, 
 ::ng-deep .mat-mdc-cell {
   text-align: center !important;
-  padding: 0 10px !important; /* Espacio uniforme */
+  padding: 0 10px !important;
 }
 
-/* Forzar que el contenido de las celdas se vea centrado */
 .actions-container { 
   display: flex !important; 
   justify-content: center !important; 
@@ -42,7 +35,7 @@
 }
 
 .stock-badge { 
-  display: inline-block; /* Mantiene el badge centrado */
+  display: inline-block; 
   padding: 4px 10px; 
   border-radius: 999px; 
   background: #dbeafe; 
@@ -54,7 +47,6 @@
 .edit { color: #f59e0b !important; }
 .delete { color: #ef4444 !important; }
 
-/* --- CARDS MÓVIL --- */
 .mobile-container { margin-top: 10px; flex: 1; overflow-y: auto; }
 .card-item { background: cadetblue; border: 2px solid #e2e8f0; border-radius: 16px; padding: 18px; margin-bottom: 16px; box-shadow: 0 6px 10px rgba(0,0,0,0.08); }
 .card-top { display: flex; align-items: center; margin-bottom: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; gap: 10px; }

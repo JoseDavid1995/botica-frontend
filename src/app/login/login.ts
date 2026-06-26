@@ -59,13 +59,11 @@ export class Login implements OnInit {
   showSidebar = true;
 
   ngOnInit() {
- console.log(this.mostrarModal)
   }
 
   constructor(private usuarioService: AuthService, private router: Router, private alertService: AlertService, private ngZone: NgZone, private cdr: ChangeDetectorRef) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        // Oculta el sidebar solo si estamos en la ruta 'login'
         this.showSidebar = event.url !== '/login';
       }
     });
@@ -83,7 +81,6 @@ export class Login implements OnInit {
     this.usuarioService.registrar(this.registroData).subscribe({
       next: () => {
      this.cerrarModal(); 
-      // 2. Éxito
       setTimeout(() => {
         this.alertService.show("Éxito", "¡Cuenta creada exitosamente!", "success");
       }, 100);
@@ -101,15 +98,12 @@ export class Login implements OnInit {
   }
 
   onLogin() {
-    debugger
-
     this.usuarioService.login(this.loginData).subscribe({
       next: (res) => {
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         const mensaje = err.error?.mensaje || "Correo o contraseña incorrectos.";
-        console.log("Disparando modal con:", mensaje); // ¿Ves esto en la consola?
         this.alertService.show("Error de Acceso", mensaje, "error");
       }
     });
@@ -128,22 +122,18 @@ export class Login implements OnInit {
     correo: '',
     contrasena: ''
   };
-  this.emailError = false; // También reinicia los errores
+  this.emailError = false;
 }
 
-// Modifica tus funciones de cierre
 cerrarModal() {
   this.mostrarModal = false;
-  this.resetFormulario(); // Limpia los datos
-   console.log(this.mostrarModal)
+  this.resetFormulario(); 
    this.cdr.detectChanges();
-   // Cierra la modal
 }
 
 abrirModalRegistro() {
-  this.resetFormulario(); // Limpiamos los datos primero
-  this.mostrarModal = true; // Luego abrimos la modal
-  console.log(this.mostrarModal)
+  this.resetFormulario(); 
+  this.mostrarModal = true; 
 }
 
 abrirModalRecuperacion() {
@@ -156,7 +146,6 @@ cerrarModalRecuperacion() {
   this.cdr.detectChanges();
 }
 
-// Agrega esto dentro de tu clase Login
 onRecuperar(form: NgForm): void {
   debugger
   form.form.markAllAsTouched();
@@ -165,14 +154,12 @@ onRecuperar(form: NgForm): void {
       this.alertService.show("Campos incompletos", "Por favor, completa todos los campos del formulario.", "error");      return;
     }
 
-  // 2. Consumir servicio
   this.usuarioService.recuperarContrasena(this.recuperarData).subscribe({
     next: (res) => {
       this.cerrarModalRecuperacion();
       this.alertService.show("Éxito", "¡Contraseña actualizada correctamente!", "success");
     },
     error: (err) => {
-      // 3. Manejo de errores
       const mensaje = err.error?.mensaje || "No se pudo actualizar la contraseña.";
       this.alertService.show("Error", mensaje, "error");
     }

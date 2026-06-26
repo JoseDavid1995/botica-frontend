@@ -1,6 +1,3 @@
-/* ==========================================================================
-   1. CONFIGURACIÓN BASE (Tus estilos originales)
-   ========================================================================== */
 * {
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
@@ -8,25 +5,14 @@
   padding: 0;
 }
 
-/* .login-wrapper {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: radial-gradient(circle at 80% 20%, #43324d 0%, #211c38 50%, #2d3e63 100%);
-  overflow: hidden;
-} */
-
 .login-wrapper {
-  width: 100vw;    /* 100% del ancho de la ventana */
-  height: 100vh;   /* 100% del alto de la ventana */
+  width: 100vw; 
+  height: 100vh;   
   display: flex;
   justify-content: center;
   align-items: center;
-  /* Tu gradiente específico para el login */
   background: radial-gradient(circle at 80% 20%, #43324d 0%, #211c38 50%, #2d3e63 100%);
-  position: fixed; /* Asegura que se mantenga fijo cubriendo todo */
+  position: fixed; 
   top: 0;
   left: 0;
   overflow: hidden;
@@ -163,7 +149,6 @@
   transform: scale(0.98);
 }
 
-/* Adaptación del ojito de contraseña en el Login Principal */
 .password-group {
   position: relative;
   display: flex;
@@ -181,7 +166,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.7); /* Modificado para que combine con tus inputs blancos */
+  color: rgba(255, 255, 255, 0.7); 
   padding: 0;
   display: flex;
   align-items: center;
@@ -197,7 +182,6 @@
   outline: none;
 }
 
-/* Enlace de registro inferior en el Login */
 .register-redirect {
   text-align: center;
   margin-top: 25px;
@@ -206,7 +190,7 @@
 }
 
 .register-link {
-  color: #79d7be; /* Un tono verde menta brillante para que resalte sobre tu fondo oscuro */
+  color: #79d7be;
   font-weight: 600;
   text-decoration: none;
   cursor: pointer;
@@ -228,12 +212,6 @@
   }
 }
 
-
-/* ==========================================================================
-   2. MODAL PREMIUM ESTILO BOTICA MODERNA (GLASSMORPHISM CLARO)
-   ========================================================================== */
-
-/* Capa de fondo que oscurece suavemente y difumina tu gradiente radial */
 .modal-registro-overlay {
   position: fixed;
   top: 0;
@@ -249,7 +227,6 @@
   -webkit-backdrop-filter: blur(10px);
 }
 
-/* Tarjeta del modal con efecto de vidrio de alta gama */
 .botica-glass {
   background: rgba(255, 255, 255, 0.8); 
   backdrop-filter: blur(16px);
@@ -267,7 +244,6 @@
   animation: scaleUpBotica 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Botón 'X' para cerrar el modal */
 .modal-close-btn {
   position: absolute;
   top: 22px;
@@ -286,7 +262,6 @@
   transform: scale(1.1);
 }
 
-/* Identificador / Tag superior de la Botica */
 .modal-header-icon {
   display: flex;
   justify-content: center;
@@ -304,7 +279,6 @@
   background: rgba(240, 245, 242, 0.5);
 }
 
-/* Textos principales del modal */
 .modal-title {
   font-family: 'Playfair Display', 'Georgia', serif; 
   text-align: center;
@@ -321,7 +295,6 @@
   margin-bottom: 30px;
 }
 
-/* Estructura moderna para cada Input */
 .input-group-modern {
   margin-bottom: 20px;
   display: flex;
@@ -336,7 +309,6 @@
   padding-left: 2px;
 }
 
-/* Contenedor estilizado para simular las celdas de la imagen */
 .input-wrapper-inner {
   display: flex;
   align-items: center;
@@ -348,7 +320,6 @@
   box-sizing: border-box;
 }
 
-/* Colores de bordes asimétricos y orgánicos */
 .border-rose {
   border: 1.5px solid rgba(195, 155, 145, 0.45);
 }
@@ -357,7 +328,6 @@
   border: 1.5px solid rgba(95, 135, 115, 0.45);
 }
 
-/* Estado Focus: Efecto limpio al ingresar datos */
 .input-wrapper-inner:focus-within {
   background: #ffffff;
   box-shadow: 0 6px 16px rgba(60, 98, 85, 0.08);
@@ -385,7 +355,6 @@
   font-size: 0.95rem;
 }
 
-/* Control del ojito del modal */
 .password-spatial {
   position: relative;
   display: flex;
@@ -403,7 +372,7 @@
   display: flex;
   align-items: center;
   padding: 0;
-  z-index: 5; /* Asegura que esté por encima del input */
+  z-index: 5; 
 }
 
 .password-spatial input {
@@ -414,7 +383,6 @@
   color: #3c6255;
 }
 
-/* Botón Registrarme con el gradiente líquido de la imagen */
 .btn-registrarme-botica {
   width: 100%;
   height: 54px;
@@ -442,7 +410,6 @@
   scale: 0.99;
 }
 
-/* Lines abstractas metálicas decorativas en el fondo del modal */
 .geo-line {
   position: absolute;
   pointer-events: none;
@@ -464,7 +431,6 @@
   transform: rotate(-22deg);
 }
 
-/* Responsive para el modal en móviles */
 @media (max-width: 500px) {
   .botica-glass {
     width: 92%;
@@ -473,7 +439,6 @@
   }
 }
 
-/* Animación fluida de escala y opacidad al abrir */
 @keyframes scaleUpBotica {
   from {
     transform: scale(0.94);
@@ -485,13 +450,11 @@
   }
 }
 
-/* Esta clase solo afecta el borde del input */
 .border-error {
   border: 2px solid #ef4444 !important;
-  outline: none; /* Evita que el navegador ponga su propio estilo por defecto */
+  outline: none; 
 }
 
-/* Estilo limpio para el mensaje de error */
 .error-message {
   color: #ef4444;
   font-size: 0.75rem;

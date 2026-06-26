@@ -1,10 +1,8 @@
-/* Limpieza y Fondo Global */
 * { box-sizing: border-box; }
 body { margin: 0; background-color: #0f172a; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; overflow-x: hidden; }
 
 .dashboard-container { display: flex; height: 100vh; background: #0f172a; color: white; overflow: hidden; }
 
-/* Sidebar */
 .sidebar { width: 260px; background: #1e293b; padding: 25px; display: flex; flex-direction: column; border-right: 1px solid #334155; flex-shrink: 0; }
 .brand { font-size: 1.5rem; font-weight: bold; color: #38bdf8; margin-bottom: 30px; padding-left: 10px; }
 .menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: #94a3b8; cursor: pointer; text-decoration: none; margin-bottom: 8px; transition: all 0.2s ease; border-radius: 8px; }
@@ -12,17 +10,14 @@ body { margin: 0; background-color: #0f172a; color: white; font-family: 'Segoe U
 .menu-item.active { color: #38bdf8; background: rgba(56, 189, 248, 0.1); font-weight: 500; }
 .btn-logout { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: auto; padding: 12px; background: #ef4444; border: none; color: white; cursor: pointer; border-radius: 8px; }
 
-/* Contenido Principal */
 .content { flex: 1; padding: 20px; display: flex; flex-direction: column; height: 100vh; overflow-y: auto; }
 .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-shrink: 0; }
 .admin-pill { background: #334155; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; }
 
-/* Grid de Tarjetas */
 .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex-grow: 1; }
 .full-width { grid-column: span 2; }
 .card { background: #1e293b; padding: 20px; border-radius: 12px; border: 1px solid #334155; display: flex; flex-direction: column; }
 
-/* Alineación: El donut ocupa las dos filas a la izquierda */
 .donut-card { grid-row: span 2; }
 
 .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; flex-shrink: 0; }
@@ -30,12 +25,10 @@ body { margin: 0; background-color: #0f172a; color: white; font-family: 'Segoe U
 .chart-wrapper { position: relative; flex-grow: 1; display: flex; align-items: center; justify-content: center; min-height: 200px; }
 canvas { max-width: 100% !important; max-height: 100% !important; }
 
-/* Leyenda del gráfico */
 .custom-legend { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; padding: 10px; background: #0f172a; border-radius: 8px; border: 1px solid #334155; }
 .legend-item { display: flex; align-items: center; gap: 8px; color: #94a3b8; font-size: 11px; }
 .legend-item span { width: 10px; height: 10px; border-radius: 2px; }
 
-/* Navegación Móvil */
 .mobile-nav { display: none; }
 
 @media (max-width: 950px) {
