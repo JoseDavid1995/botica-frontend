@@ -1,35 +1,45 @@
+<app-spinner></app-spinner>
 <app-alert-modal></app-alert-modal>
-<div class="app-container" *ngIf="showSidebar">
-  <aside class="sidebar">
+
+<div class="app-container">
+  <!-- Sidebar solo cuando no es login -->
+  <aside class="sidebar" *ngIf="showSidebar">
     <div class="brand">BOTICA PRO</div>
+
     <nav class="menu">
       <a routerLink="/dashboard" routerLinkActive="active" class="menu-item">
         <fa-icon [icon]="iconHome"></fa-icon> Inicio
       </a>
+
       <a routerLink="/inventario" routerLinkActive="active" class="menu-item">
         <fa-icon [icon]="iconBox"></fa-icon> Inventario
       </a>
-      <a class="menu-item">
-        <fa-icon [icon]="iconProfile"></fa-icon> Mi Perfil
-      </a>
+
+      <a class="menu-item"> <fa-icon [icon]="iconProfile"></fa-icon> Mi Perfil </a>
     </nav>
+
     <button class="btn-logout" (click)="onLogout()">
       <fa-icon [icon]="iconLogout"></fa-icon> Cerrar Sesión
     </button>
+
+    <nav class="mobile-nav">
+      <a routerLink="/dashboard" class="mobile-item">
+        <fa-icon [icon]="iconHome"></fa-icon>
+      </a>
+      <a routerLink="/inventario" class="mobile-item">
+        <fa-icon [icon]="iconBox"></fa-icon>
+      </a>
+      <a class="mobile-item">
+        <fa-icon [icon]="iconProfile"></fa-icon>
+      </a>
+      <a class="mobile-item" (click)="onLogout()">
+        <fa-icon [icon]="iconLogout"></fa-icon>
+      </a>
+    </nav>
   </aside>
 
-  <main class="content">
+  <!-- Un solo router-outlet -->
+  <main [class.content]="showSidebar" [class.login-container]="!showSidebar">
     <router-outlet></router-outlet>
   </main>
-
-  <nav class="mobile-nav">
-    <a routerLink="/dashboard" routerLinkActive="active" class="mobile-item"><fa-icon [icon]="iconHome"></fa-icon></a>
-    <a routerLink="/inventario" routerLinkActive="active" class="mobile-item"><fa-icon [icon]="iconBox"></fa-icon></a>
-    <a class="mobile-item"><fa-icon [icon]="iconProfile"></fa-icon></a>
-    <a class="mobile-item" (click)="onLogout()"><fa-icon [icon]="iconLogout"></fa-icon></a>
-  </nav>
 </div>
-
-<main class="login-container" *ngIf="!showSidebar">
-  <router-outlet></router-outlet>
-</main>

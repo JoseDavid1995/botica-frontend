@@ -1,41 +1,93 @@
-import { Component, signal, OnInit } from '@angular/core'; // Importa OnInit
-import { MatIconModule } from '@angular/material/icon';
-import { RouterOutlet, Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router'; // Importa RouterLink y RouterLinkActive
-import { AuthService } from './service/auth.service';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { faBox, faHome, faSignOutAlt, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  Router,
+  RouterOutlet,
+  NavigationEnd,
+  RouterLink,
+  RouterLinkActive
+} from '@angular/router';
+
+import { MatIconModule } from '@angular/material/icon';
+
+import {
+  faBox,
+  faHome,
+  faSignOutAlt,
+  faUserCircle
+} from '@fortawesome/free-solid-svg-icons';
+
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+
+import { AuthService } from './service/auth.service';
+import { LoadingService } from './services/loading';
+
+import { SpinnerComponent } from './components/spinner/spinner';
 import { AlertModal } from './components/alert-modal/alert-modal';
 
 @Component({
   selector: 'app-root',
-  standalone: true, // Asegúrate de que sea standalone
-  imports: [RouterOutlet, MatIconModule, CommonModule, FaIconComponent, RouterLink, RouterLinkActive, AlertModal], // Agrega RouterLink y RouterLinkActive
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    MatIconModule,
+    FaIconComponent,
+    SpinnerComponent,
+    AlertModal
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App implements OnInit {
-  iconLogout = faSignOutAlt; iconHome = faHome; iconProfile = faUserCircle;
-    iconBox = faBox;
+
   protected readonly title = signal('botica');
-  showSidebar = true; // <--- ESTA ES LA VARIABLE QUE TE FALTABA
 
-  constructor(private authService: AuthService, private router: Router) {}
+  iconLogout = faSignOutAlt;
+  iconHome = faHome;
+  iconProfile = faUserCircle;
+  iconBox = faBox;
 
-  ngOnInit() {
-    this.router.events.subscribe((event) => {
+  // Inicia ocultando el sidebar
+  showSidebar = false;
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    public loadingService: LoadingService
+  ) {}
+
+  ngOnInit(): void {
+
+    // Mostrar spinner al iniciar
+    this.loadingService.show();
+
+    this.router.events.subscribe(event => {
+
       if (event instanceof NavigationEnd) {
-        // Oculta el sidebar si la URL es '/login' o está vacía
-        this.showSidebar = event.url !== '/login' && event.url !== '/';
+
+        // Solo mostrar sidebar fuera del login
+        this.showSidebar = event.url !== '/login';
+
+        // Ocultar spinner luego de la primera navegación
+        setTimeout(() => {
+          this.loadingService.hide();
+        }, 3000);
       }
+
     });
+
   }
 
-  onLogout() { 
-    this.authService.logout(); 
-    this.router.navigate(['/login']); 
+  onLogout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
-    navigateToInventario() { this.router.navigate(['/inventario']); }
+  navigateToInventario(): void {
+    this.router.navigate(['/inventario']);
+  }
 
 }
