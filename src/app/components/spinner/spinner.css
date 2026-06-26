@@ -28,7 +28,7 @@
    Elementos (Ya no necesitan estilos de tarjeta)
 =========================== */
 .logo {
-    width: 80px; /* Un poco más pequeño para ser más sutil */
+    width: 120px; /* Un poco más pequeño para ser más sutil */
     margin-bottom: 20px;
     animation: float 3s ease-in-out infinite;
     filter: drop-shadow(0 0 15px rgba(255,255,255,0.2));
