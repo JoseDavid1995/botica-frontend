@@ -5,7 +5,10 @@ import {
   RouterOutlet,
   NavigationEnd,
   RouterLink,
-  RouterLinkActive
+  RouterLinkActive,
+  NavigationStart,
+  NavigationCancel,
+  NavigationError
 } from '@angular/router';
 
 import { MatIconModule } from '@angular/material/icon';
@@ -59,19 +62,16 @@ export class App implements OnInit {
     public loadingService: LoadingService
   ) {}
 
-  ngOnInit(): void {
+  /* ngOnInit(): void {
 
-    // Mostrar spinner al iniciar
     this.loadingService.show();
 
     this.router.events.subscribe(event => {
 
       if (event instanceof NavigationEnd) {
 
-        // Solo mostrar sidebar fuera del login
         this.showSidebar = event.url !== '/login';
 
-        // Ocultar spinner luego de la primera navegación
         setTimeout(() => {
           this.loadingService.hide();
         }, 3000);
@@ -79,7 +79,28 @@ export class App implements OnInit {
 
     });
 
-  }
+  } */
+
+    // En tu ngOnInit, mantén la lógica de navegación que corregimos:
+ngOnInit(): void {
+  this.router.events.subscribe(event => {
+    if (event instanceof NavigationStart) {
+      this.loadingService.show();
+    }
+    
+    if (event instanceof NavigationEnd || 
+        event instanceof NavigationCancel || 
+        event instanceof NavigationError) {
+      
+      const url = (event as any).urlAfterRedirects || (event as any).url;
+      this.showSidebar = url !== '/login';
+      
+      // Llamamos a hide() inmediatamente; el servicio se encargará 
+      // del retraso de 500ms gracias al switchMap
+      this.loadingService.hide();
+    }
+  });
+}
 
   onLogout(): void {
     this.authService.logout();
